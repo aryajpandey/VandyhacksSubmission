@@ -4,10 +4,12 @@ import {
   View,
   Text,
   Image,
-  Modal,
   RefreshControl,
   FlatList,
+<<<<<<< HEAD
   TouchableHighlight, Button
+=======
+>>>>>>> 025e60f5156dcd1381b4735dcb924df0be441b0c
 } from "react-native";
 import { Rating } from "react-native-ratings";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -51,7 +53,10 @@ const Trainer = ({ trainer }) => {
         <Text
           style={{
             alignSelf: "center",
+<<<<<<< HEAD
             // fontFamily: "Roboto-Regular",
+=======
+>>>>>>> 025e60f5156dcd1381b4735dcb924df0be441b0c
             fontWeight: "bold",
             fontSize: 15,
           }}
@@ -68,6 +73,7 @@ const Trainer = ({ trainer }) => {
       <View style={{ flex: 1 }}>
         <FlatList
           style={{ padding: 20 }}
+          keyExtractor={(item) => item.id}
           data={trainer.categories}
           renderItem={({ item }) => {
             return <Text style={{ fontSize: 15 }}>{item}</Text>;
@@ -85,10 +91,8 @@ const wait = (timeout) => {
   });
 };
 
-const HomeScreen = ({ nav, interests }) => {
+function HomeScreen({ route, nav }) {
   const [refreshing, setRefreshing] = React.useState(false);
-  const [modalVisible, setModalVisible] = React.useState(false);
-  const [currentTrainer, setCurrentTrainer] = React.useState(false);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -96,6 +100,7 @@ const HomeScreen = ({ nav, interests }) => {
   }, []);
 
   return (
+<<<<<<< HEAD
     <View style={{ flex: 1, paddingTop: 0, backgroundColor: "white" }}>
       <AppHeader></AppHeader>
       {/*Modal*/}
@@ -146,15 +151,17 @@ const HomeScreen = ({ nav, interests }) => {
         </View>
       </Modal>
       {/*Modal*/}
+=======
+    <View style={{ flex: 1, paddingTop: 5, backgroundColor: "white" }}>
+      {}
+>>>>>>> 025e60f5156dcd1381b4735dcb924df0be441b0c
       <FlatList
         data={require("../dummy/cards.js")}
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
               onPress={() => {
-                setCurrentTrainer(item);
-                console.log(currentTrainer);
-                setModalVisible(true);
+                nav.navigate("Trainer", { item });
               }}
             >
               <Trainer trainer={item} />
@@ -172,7 +179,7 @@ const HomeScreen = ({ nav, interests }) => {
       ></FlatList>
     </View>
   );
-};
+}
 const s = require("../style/global-style.js");
 
 export default HomeScreen;
