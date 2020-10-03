@@ -7,21 +7,51 @@ import {
   Modal,
   RefreshControl,
   FlatList,
-  TouchableHighlight,
+  TouchableHighlight, Button
 } from "react-native";
 import { Rating } from "react-native-ratings";
+import { SafeAreaView } from "react-native-safe-area-context";
+import {Appbar, Searchbar} from 'react-native-paper';
+
+const AppHeader = ({header}) => {
+  return(
+
+   <Appbar.Header style={{
+     height: 80,
+     backgroundColor: '#ffea00',
+   }}>
+
+   
+   <View style = {{flexDirection: 'row',}}>
+      <Searchbar style={{
+        borderRadius: 25,
+      }} 
+      placeholder="Find"
+      
+      ></Searchbar>
+   </View>
+
+
+   </Appbar.Header>
+  );
+};
+
+
+
+
 
 const Trainer = ({ trainer }) => {
   return (
+    <SafeAreaView>
     <View style={s.card}>
       <View
-        style={{ flex: 1, flexDirection: "column", justifyContent: "center" }}
+        style={{ flex: 1, flexDirection: "column", justifyContent: "center"}}
       >
         <Image style={s.cardProfileImage} source={trainer.image}></Image>
         <Text
           style={{
             alignSelf: "center",
-            fontFamily: "Roboto-Regular",
+            // fontFamily: "Roboto-Regular",
             fontWeight: "bold",
             fontSize: 15,
           }}
@@ -45,6 +75,7 @@ const Trainer = ({ trainer }) => {
         ></FlatList>
       </View>
     </View>
+    </SafeAreaView>
   );
 };
 
@@ -65,7 +96,8 @@ const HomeScreen = ({ nav, interests }) => {
   }, []);
 
   return (
-    <View style={{ flex: 1, paddingTop: 5, backgroundColor: "white" }}>
+    <View style={{ flex: 1, paddingTop: 0, backgroundColor: "white" }}>
+      <AppHeader></AppHeader>
       {/*Modal*/}
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={s.centeredView}>
