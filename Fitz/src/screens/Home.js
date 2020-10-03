@@ -4,10 +4,8 @@ import {
   View,
   Text,
   Image,
-  Modal,
   RefreshControl,
   FlatList,
-  TouchableHighlight,
 } from "react-native";
 import { Rating } from "react-native-ratings";
 
@@ -21,7 +19,6 @@ const Trainer = ({ trainer }) => {
         <Text
           style={{
             alignSelf: "center",
-            fontFamily: "Roboto-Regular",
             fontWeight: "bold",
             fontSize: 15,
           }}
@@ -38,6 +35,7 @@ const Trainer = ({ trainer }) => {
       <View style={{ flex: 1 }}>
         <FlatList
           style={{ padding: 20 }}
+          keyExtractor={(item) => item.id}
           data={trainer.categories}
           renderItem={({ item }) => {
             return <Text style={{ fontSize: 15 }}>{item}</Text>;
@@ -54,10 +52,8 @@ const wait = (timeout) => {
   });
 };
 
-const HomeScreen = ({ nav, interests }) => {
+function HomeScreen({ route, nav }) {
   const [refreshing, setRefreshing] = React.useState(false);
-  const [modalVisible, setModalVisible] = React.useState(false);
-  const [currentTrainer, setCurrentTrainer] = React.useState(false);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -66,63 +62,14 @@ const HomeScreen = ({ nav, interests }) => {
 
   return (
     <View style={{ flex: 1, paddingTop: 5, backgroundColor: "white" }}>
-      {/*Modal*/}
-      <Modal animationType="slide" transparent={true} visible={modalVisible}>
-        <View style={s.centeredView}>
-          <View style={s.modalView}>
-            <View style={{ flexDirection: "row" }}>
-              <View>
-                <Text style={s.modalText}>{currentTrainer.name}</Text>
-                <Image
-                  style={
-                    (s.cardProfileImage,
-                    { width: 150, height: 150, borderRadius: 20 })
-                  }
-                  source={currentTrainer.image}
-                ></Image>
-                <Rating
-                  ratingCount={5}
-                  startingValue={currentTrainer.rating}
-                  readonly
-                  imageSize={20}
-                />
-              </View>
-              <View>
-                <Text
-                  style={(s.modalText, { fontSize: 20, top: 40, padding: 20 })}
-                >
-                  {'"' + currentTrainer.description + '"'}
-                </Text>
-                <FlatList
-                  style={{ padding: 20, top: 20 }}
-                  data={currentTrainer.categories}
-                  renderItem={({ item }) => {
-                    return <Text style={{ fontSize: 20 }}>{item}</Text>;
-                  }}
-                ></FlatList>
-              </View>
-            </View>
-            <TouchableHighlight
-              style={{ ...s.openButton, backgroundColor: "#2196F3" }}
-              onPress={() => {
-                setModalVisible(false);
-              }}
-            >
-              <Text style={s.textStyle}>Close</Text>
-            </TouchableHighlight>
-          </View>
-        </View>
-      </Modal>
-      {/*Modal*/}
+      {}
       <FlatList
         data={require("../dummy/cards.js")}
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
               onPress={() => {
-                setCurrentTrainer(item);
-                console.log(currentTrainer);
-                setModalVisible(true);
+                nav.navigate("Trainer", { item });
               }}
             >
               <Trainer trainer={item} />
@@ -140,7 +87,7 @@ const HomeScreen = ({ nav, interests }) => {
       ></FlatList>
     </View>
   );
-};
+}
 const s = require("../style/global-style.js");
 
 export default HomeScreen;
